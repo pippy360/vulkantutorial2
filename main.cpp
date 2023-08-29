@@ -1,18 +1,20 @@
+
+#include "first_app.hpp"
+
+// std
+#include <cstdlib>
 #include <iostream>
-
-#define GLFW_INCLUDE_VULKAN
-#include <GLFW/glfw3.h>
-
-#include "game_app.hpp"
-
-using namespace lve;
+#include <stdexcept>
 
 int main() {
-    glfwInit();
+  lve::FirstApp app{};
 
-    GameApp app;
+  try {
     app.run();
+  } catch (const std::exception &e) {
+    std::cerr << e.what() << '\n';
+    return EXIT_FAILURE;
+  }
 
-    glfwTerminate();
-    return 0;
+  return EXIT_SUCCESS;
 }

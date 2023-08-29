@@ -1,10 +1,10 @@
 #pragma once
+
 #include "lve_device.hpp"
 
-#define GLFW_INCLUDE_VULKAN
-#include <GLFW/glfw3.h>
-
+// std
 #include <string>
+#include <vector>
 
 namespace lve {
 
@@ -23,38 +23,32 @@ struct PipelineConfigInfo {
   uint32_t subpass = 0;
 };
 
-
 class LvePipeline {
+ public:
+  LvePipeline(
+      LveDevice& device,
+      const std::string& vertFilepath,
+      const std::string& fragFilepath,
+      const PipelineConfigInfo& configInfo);
+  ~LvePipeline();
 
-public:
-    LvePipeline(LveDevice& device,
-                const PipelineConfigInfo& config,
-                std::string vertFilePath,
-                std::string fragFilePath): device_{device} {
-        createGraphicsPipeline(config, vertFilePath, fragFilePath);
-    }
+  LvePipeline(const LvePipeline&) = delete;
+  void operator=(const LvePipeline&) = delete;
 
-    LvePipeline(const LvePipeline&) = delete;
-    LvePipeline& operator=(LvePipeline&) = delete;
+  static PipelineConfigInfo defaultPipelineConfigInfo(uint32_t width, uint32_t height);
 
-    ~LvePipeline();
+ private:
+  static std::vector<char> readFile(const std::string& filepath);
 
-    static PipelineConfigInfo defaultPipelineConfig(uint32_t width, uint32_t height);
+  void createGraphicsPipeline(
+      const std::string& vertFilepath,
+      const std::string& fragFilepath,
+      const PipelineConfigInfo& configInfo);
+  void createShaderModule(const std::vector<char>& code, VkShaderModule* shaderModule);
 
-private:
-
-    void createGraphicsPipeline(const PipelineConfigInfo& config,
-                std::string vertFilePath,
-                std::string fragFilePath);
-
-    void createShaderModule(const std::vector<char>& shaderCode,
-                            VkShaderModule* module);
-
-    LveDevice& device_;
-    VkPipeline graphicsPipeline_;
-    VkShaderModule fragShader_;
-    VkShaderModule vertShader_;
-
+  LveDevice& lveDevice;
+  VkPipeline graphicsPipeline;
+  VkShaderModule vertShaderModule;
+  VkShaderModule fragShaderModule;
 };
-
-} // end of lve
+}  // namespace lve

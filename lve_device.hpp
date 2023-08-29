@@ -1,14 +1,10 @@
 #pragma once
 
-#include "game_window.hpp"
-
-#define GLFW_INCLUDE_VULKAN
-#include <GLFW/glfw3.h>
+#include "lve_window.hpp"
 
 // std lib headers
 #include <string>
 #include <vector>
-
 
 namespace lve {
 
@@ -34,7 +30,7 @@ class LveDevice {
   const bool enableValidationLayers = true;
 #endif
 
-  LveDevice(GameWindow &window);
+  LveDevice(LveWindow &window);
   ~LveDevice();
 
   // Not copyable or movable
@@ -97,7 +93,7 @@ class LveDevice {
   VkInstance instance;
   VkDebugUtilsMessengerEXT debugMessenger;
   VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
-  GameWindow &window;
+  LveWindow &window;
   VkCommandPool commandPool;
 
   VkDevice device_;
@@ -106,7 +102,7 @@ class LveDevice {
   VkQueue presentQueue_;
 
   const std::vector<const char *> validationLayers = {"VK_LAYER_KHRONOS_validation"};
-  const std::vector<const char *> deviceExtensions = {VK_KHR_SWAPCHAIN_EXTENSION_NAME};
+  const std::vector<const char *> deviceExtensions = {VK_KHR_SWAPCHAIN_EXTENSION_NAME, "VK_KHR_portability_subset"};
 };
 
 }  // namespace lve
