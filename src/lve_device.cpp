@@ -8,6 +8,9 @@
 
 namespace lve {
 
+const std::vector<const char *> validationLayers = {"VK_LAYER_KHRONOS_validation"};
+const std::vector<const char *> deviceExtensions = {VK_KHR_SWAPCHAIN_EXTENSION_NAME, "VK_KHR_portability_subset"};
+
 // local callback functions
 static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
     VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
@@ -47,7 +50,7 @@ void DestroyDebugUtilsMessengerEXT(
 }
 
 // class member functions
-LveDevice::LveDevice(LveWindow &window) : window{window} {
+LveDevice::LveDevice(LveWindow &window) : window(window) {
   createInstance();
   setupDebugMessenger();
   createSurface();

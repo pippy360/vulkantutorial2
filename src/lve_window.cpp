@@ -5,7 +5,7 @@
 
 namespace lve {
 
-LveWindow::LveWindow(int w, int h, std::string name) : width{w}, height{h}, windowName{name} {
+LveWindow::LveWindow(uint32_t w, uint32_t h, std::string name) : width{w}, height{h}, windowName{name} {
   initWindow();
 }
 

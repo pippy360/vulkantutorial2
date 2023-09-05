@@ -8,7 +8,7 @@ namespace lve {
 
 class LveWindow {
  public:
-  LveWindow(int w, int h, std::string name);
+  LveWindow(uint32_t w, uint32_t h, std::string name);
   ~LveWindow();
 
   LveWindow(const LveWindow &) = delete;
@@ -20,12 +20,13 @@ class LveWindow {
 
   int getWidth() { return width; }
   int getHeight() { return height; }
+  VkExtent2D getExtent() { return {width, height}; };
 
  private:
   void initWindow();
 
-  const int width;
-  const int height;
+  const uint32_t width;
+  const uint32_t height;
 
   std::string windowName;
   GLFWwindow *window;
